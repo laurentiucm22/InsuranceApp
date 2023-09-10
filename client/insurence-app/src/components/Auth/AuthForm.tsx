@@ -74,7 +74,7 @@ const AuthForm: React.FC = () => {
           <Button
             styleType="loginBtn"
             type="submit"
-            className="block w-full mt-3 max-w-xs mx-auto bg-blue-500 hover:bg-blue-600 focus:bg-blue-600 text-white rounded-lg px-4 py-4 font-semibold"
+            className="block w-full mt-3 max-w-xs mx-auto bg-blue-500 hover:bg-blue-600 focus:bg-blue-600 text-white rounded-lg font-semibold"
           >
             Logare
           </Button>
@@ -84,7 +84,7 @@ const AuthForm: React.FC = () => {
             onClick={handleSingup}
             styleType="creareContBtn"
             type="button"
-            className="block w-full max-w-xs mx-auto bg-blue-500 hover:bg-blue-600 focus:bg-blue-600 text-white rounded-lg px-3 py-3 font-semibold"
+            className="block w-full mx-auto bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 text-white rounded-lg font-semibold"
           >
             Creaza Cont
           </Button>

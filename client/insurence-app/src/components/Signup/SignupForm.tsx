@@ -43,7 +43,7 @@ const SignupForm: React.FC = () => {
           <Button
             styleType="creareContBtn"
             type="submit"
-            className="min-w-full mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+            className="min-w-full mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg font-semibold"
           >
             Creaza Cont
           </Button>

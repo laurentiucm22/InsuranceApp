@@ -22,26 +22,6 @@ const Singup = () => {
                 <p>Profita acum, este gratuit!</p>
               </div>
               <div>
-                <div className="flex justify-center px-3">
-                  <section className="w-full bg-indigo-500 rounded text-white px-3 py-4 mb-4">
-                    <p className="text-base text-slate-200 leading-normal font-bold">
-                      Creaza un cont.
-                    </p>
-                    <p className="font-bold text-slate-200 text-base leading-relaxed mb-2">
-                      Foloseste mailul si parola de mai jos.
-                    </p>
-                    <p className="flex flex-col ">
-                      <label>
-                        Email: <span className="font-medium">john@doe.com</span>
-                      </label>
-
-                      <label>
-                        Parola: <span className="font-medium">#22cl</span>
-                      </label>
-                    </p>
-                  </section>
-                </div>
-
                 <SignupForm />
               </div>
             </div>

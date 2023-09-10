@@ -5,7 +5,7 @@ import AuthentificationPage from "./pages/AuthentificationPage";
 import AccountPage from "./pages/AccountPage";
 import ErrorPage from "./pages/ErrorPage";
 import SignupPage from "./pages/SingupPage";
-import CreazaOfertaPage from "./pages/CreazaOfertaPage";
+import CreateOfferPage from "./pages/CreateOfferPage";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -16,7 +16,7 @@ const Router = () => {
       children: [
         { index: true, element: <HomePage /> },
         { path: ":userName", element: <AccountPage /> },
-        { path: ":userName/creaza-oferta", element: <CreazaOfertaPage /> },
+        { path: ":userName/creaza-oferta", element: <CreateOfferPage /> },
 
         {
           path: "authentification",
