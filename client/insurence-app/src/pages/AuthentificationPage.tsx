@@ -1,9 +1,9 @@
-import AuthContainer from "../components/Auth/AuthContainer";
+import Auth from "../components/Auth/Auth";
 
 const Authentification = () => {
   return (
     <>
-      <AuthContainer />
+      <Auth />
     </>
   );
 };
