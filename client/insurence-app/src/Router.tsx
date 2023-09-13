@@ -22,7 +22,7 @@ const Router = () => {
           path: "authentification",
           children: [
             { index: true, element: <AuthentificationPage /> },
-            { path: "creare-cont", element: <SignupPage /> },
+            { path: "creaza-cont", element: <SignupPage /> },
           ],
         },
       ],

@@ -12,8 +12,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-table": "^8.9.7",
-    "formik": "^2.4.4",
     "moment": "^2.29.4",
+    "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-data-grid": "^7.0.0-beta.37",
     "react-dom": "^18.2.0",
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
+    "@types/redux": "^3.6.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",

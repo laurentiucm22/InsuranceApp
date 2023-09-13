@@ -21,7 +21,7 @@ const Auth = () => {
               <h1 className="font-bold uppercase text-lg md:text-3xl text-gray-900">
                 Authentificare
               </h1>
-              <div className="w-full flex justify-center items-center">
+              <div className="w-full flex  justify-center items-center">
                 <AuthForm />
               </div>
             </div>

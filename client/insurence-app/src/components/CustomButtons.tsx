@@ -13,7 +13,7 @@ const ButtonStyleTypes = {
   cancelBtn:
     "outline-1 outline outline-white uppercase hover:bg-red-300 transition-all ease-in duration-200 ml-1 inline-block rounded px-6 py-2 text-sm font-medium leading-normal text-white",
 
-  defaultBtn: "text-white",
+  defaultBtn: "",
 };
 
 interface ButtonProps {

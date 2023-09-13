@@ -1,5 +1,5 @@
-import CreateOfferForm from "./CreateOfferForm";
 import createOfferImg from "../../assets/images/create-offer.jpg";
+import CreateOfferForm from "./CreateOfferForm";
 
 const CreateOffer = () => {
   return (

@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = { count: 0 };
+
 const offersCreatedSlice = createSlice({
   name: "offers-created",
-  initialState: 0,
+  initialState,
   reducers: {
-    countOffersCreated: state => state + 1,
+    countOffersCreated(state) {
+      state.count = state.count + 1;
+    },
   },
 });
 

@@ -3,67 +3,101 @@ import Button from "../CustomButtons";
 import Input from "../CustomInputs";
 import { useState } from "react";
 
+export interface userAuthData {
+  email: string;
+  password: string;
+}
+
 const AuthForm: React.FC = () => {
   const navigate = useNavigate();
   const [enteredEmail, setEnteredEmail] = useState<string>("");
   const [enteredPassword, setEnteredPassword] = useState<string>("");
 
-  const handleSingup = () => {
-    navigate("creare-cont");
+  const [enteredEmailTouched, setEnteredEmailTouch] = useState<boolean>(false);
+  const [enteredPasswordTouched, setEnteredPasswordTouched] =
+    useState<boolean>(false);
+
+  const enteredEmailIsValid = enteredEmail.trim() !== "";
+  const enteredPasswordIsValid = enteredPassword.trim() !== "";
+
+  const emailInputIsValid = !enteredEmailIsValid && enteredEmailTouched;
+  const passwordInputIsValid =
+    !enteredPasswordIsValid && enteredPasswordTouched;
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEnteredEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEnteredPassword(e.target.value);
+  };
+
+  const emailInputBlurHandler = () => {
+    setEnteredEmailTouch(true);
+  };
+  const passwordInputBlurHandler = () => {
+    setEnteredPasswordTouched(true);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userId = "/jhon-doe";
 
-    navigate(userId);
+    const userLoginData = {
+      email: enteredEmail.toLocaleLowerCase(),
+      password: enteredPassword.toLocaleLowerCase(),
+    };
 
-    console.log({
-      mail: enteredEmail,
-      password: enteredPassword,
-    });
+    if (!enteredEmailIsValid && !enteredPasswordIsValid) {
+      setEnteredEmailTouch(true);
+      setEnteredPasswordTouched(true);
+      return;
+    }
+
+    const postUserLogin = (userLoginData: userAuthData) => {
+      localStorage.setItem("userLogin", JSON.stringify(userLoginData));
+    };
+    postUserLogin(userLoginData);
+    navigate(userId);
+  };
+
+  const handleSingupRedirection = () => {
+    navigate("creaza-cont");
   };
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 w-10/12">
-      <div className="w-full px-3 mb-5 text-left">
-        <label htmlFor="email-input" className="text-xs font-semibold mb-2">
-          Email
-        </label>
-        <div className="flex justify-center">
+      <div className="w-full px-3 text-left">
+        <div className="flex flex-col justify-center">
           <Input
             value={enteredEmail}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setEnteredEmail(e.target.value)
-            }
+            onChange={handleEmailChange}
+            onBlur={emailInputBlurHandler}
+            label="Email"
             id="email-input"
             name="email"
             type="email"
             className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
             placeholder="johnsmith@example.com"
+            isError={emailInputIsValid}
           />
         </div>
       </div>
 
       <div className="flex text-left">
-        <div className="w-full px-3 mb-4">
-          <label
-            htmlFor="password-input"
-            className="text-xs font-semibold px-1"
-          >
-            Parola
-          </label>
-          <div className="flex justify-center">
+        <div className="w-full px-3">
+          <div className="flex flex-col justify-center">
             <Input
               value={enteredPassword}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEnteredPassword(e.target.value)
-              }
+              onChange={handlePasswordChange}
+              onBlur={passwordInputBlurHandler}
+              label="Parola"
               id="password-input"
               name="password"
               type="password"
               className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
               placeholder="************"
+              isError={passwordInputIsValid}
             />
           </div>
         </div>
@@ -81,7 +115,7 @@ const AuthForm: React.FC = () => {
           <p className="w-full text-center font-bold pt-3">SAU</p>
 
           <Button
-            onClick={handleSingup}
+            onClick={handleSingupRedirection}
             styleType="creareContBtn"
             type="button"
             className="block w-full mx-auto bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 text-white rounded-lg font-semibold"

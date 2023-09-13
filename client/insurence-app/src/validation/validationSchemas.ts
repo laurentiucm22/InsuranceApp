@@ -21,8 +21,6 @@ export interface MailAndPasswordSchemaTypes
   password: string;
 }
 
-// const getCurrentYear = () => new Date().getFullYear();
-
 export const createOffersValidationSchema = yup.object({
   lastName: yup
     .string()
@@ -34,42 +32,56 @@ export const createOffersValidationSchema = yup.object({
     .required("Prenumele este obligatoriu.")
     .max(10, "Prenumele trebuie sa fie maxim de 10 caractere."),
 
-  // birthYear: yup
-  //   .date()
-  //   .required("Data este obligatorie.")
-  //   .min(1900, "Anul trebuie sa fie mai mare de anul 1900.")
-  //   .max(getCurrentYear(), "Anul trebuie sa fie anul curent sau un an mai mic.")
-  //   .test("is-valid-date", "Data invalida", value => {
-  //     if (!value) return true;
-  //     const dateString = value.toString();
-  //     console.log(dateString);
-  //     return /^\d{4}-\d{2}-\d{2}$/.test(dateString);
-  //   }),
+  birthYear: yup
+    .string()
+    .test("is-valid-date", "Data invalida", value => {
+      if (!value) return true;
+      const dateString = value.toString();
+      return (
+        /^\d{4}-\d{2}-\d{2}$/.test(dateString) ||
+        /^\d{2}-\d{2}-\d{4}$/.test(dateString)
+      );
+    })
+    .required("Data este obligatorie."),
 
   insuranceType: yup
     .string()
     .required("Tipul de asigurare este obligatorie.")
     .oneOf(["RCA", "Casco"], "Invalid insurance type"),
 
-  carManufacturer: yup.string().required("Marca este obligatorie."),
+  carManufacturer: yup.string().when("insuranceType", (val, schema) => {
+    if (val[0] === "RCA") return schema.required("Marca este obligatorie.");
+    return schema;
+  }),
 
-  carYear: yup
-    .number()
-    .required("Anul fabricarii este obligatoriu.")
-    .integer("Anul trebuie sa fie un numar intreg."),
+  carYear: yup.number().when("insuranceType", (val, schema) => {
+    if (val[0] === "RCA")
+      return schema
+        .required("Anul fabricarii este obligatoriu.")
+        .integer("Anul trebuie sa fie un numar intreg.");
+    return schema;
+  }),
 
-  licensePlate: yup
-    .string()
-    .required("Numarul de inmatriculare este obligatoriu."),
+  licensePlate: yup.string().when("insuranceType", (val, schema) => {
+    if (val[0] === "RCA")
+      return schema.required("Numarul de inmatriculare este obligatoriu.");
+    return schema;
+  }),
+
+  carSerial: yup.string().required("Seria de sasiu este obligatorie."),
+
+  numberOfKm: yup.number().required("Nr. de kilometri este obligatoriu."),
 });
 
 export interface OfferCreatedSchema
   extends yup.InferType<typeof createOffersValidationSchema> {
   firstName: string;
   lastName: string;
-  // birthYear: Date;
+  birthYear: string;
   insuranceType: string;
   carManufacturer: string;
   carYear: number;
   licensePlate: string;
+  carSerial: string;
+  numberOfKm: number;
 }
