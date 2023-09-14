@@ -43,7 +43,7 @@ const AccountTable = () => {
           </thead>
           <tbody>
             {parseData.length === 0 ? (
-              <tr className="lex justify-center">
+              <tr className="text-left lg:text-center">
                 <td
                   className="w-full py-4 font-semibold"
                   colSpan={calcNrOfColumnsToSpan}
