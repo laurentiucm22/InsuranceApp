@@ -5,13 +5,14 @@ import Modal from "../Modal";
 import { useState } from "react";
 
 const Welcome = () => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-
   const navigate = useNavigate();
+
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleLogin = () => {
     navigate("authentification");
   };
+
   const handleCreazaOferta = () => {
     setShowModal(true);
   };

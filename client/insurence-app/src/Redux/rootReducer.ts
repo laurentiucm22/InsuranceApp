@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import { countOffersCreated } from "./slices/offersCreatedSlice";
-import formDataReducer from "./slices/offerFormDataSlice";
+import counterReducer from "./slices/offersCreatedSlice";
+import uiReducer from "./slices/uiSlice";
 
 const rootReducer = combineReducers({
-  offerCount: countOffersCreated,
-  formData: formDataReducer,
+  counter: counterReducer,
+  ui: uiReducer,
 });
 
 export default rootReducer;

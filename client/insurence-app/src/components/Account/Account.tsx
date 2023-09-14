@@ -7,12 +7,12 @@ const Account = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center text-white">
+    <div className="h-screen w-full flex flex-col items-center pt-32 text-white">
       {/* Header */}
-      <div className="w-full px-4 md:px-16 flex justify-between">
+      <div className="w-5/6 flex items-center justify-between">
         <p>
-          <span className="text-3xl">Welcome </span>
-          <span className="capitalize text-3xl">
+          <span className="text-md md:text-3xl">Welcome </span>
+          <span className="capitalize text-md md:text-3xl">
             {params.userName?.split("-").join(" ")}
           </span>
         </p>
@@ -20,7 +20,7 @@ const Account = () => {
         <Button
           type="button"
           styleType="creazaOfertaBtn"
-          className="hover:bg-blue-600 hover:outline-blue-600"
+          className="hover:bg-blue-600 hover:outline-blue-600 text-sm"
           onClick={() => navigate(`/${params.userName}/creaza-oferta`)}
         >
           Creare Oferta
@@ -28,7 +28,9 @@ const Account = () => {
       </div>
 
       {/* Table */}
-      <AccountTable />
+      <div className="w-5/6">
+        <AccountTable />
+      </div>
     </div>
   );
 };

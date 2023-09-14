@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custome__scrollbar::-webkit-scrollbar {
+  @apply w-1 h-1;
+}
+
+.custome__scrollbar::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-300;
+}
+
+.custome__scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue-500;
+}

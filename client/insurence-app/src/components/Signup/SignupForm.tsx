@@ -3,9 +3,14 @@ import { useState } from "react";
 import Button from "../CustomButtons";
 import Input from "../CustomInputs";
 import { userAuthData } from "../Auth/AuthForm";
+import { useDispatch } from "react-redux";
+import { validUser } from "../../Redux/slices/uiSlice";
+import { nanoid } from "nanoid/async";
 
 const SignupForm: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [enteredEmail, setEnteredEmail] = useState<string>("");
   const [enteredPassword, setEnteredPassword] = useState<string>("");
 
@@ -13,6 +18,7 @@ const SignupForm: React.FC = () => {
   const [enteredPasswordTouched, setEnteredPasswordTouched] =
     useState<boolean>(false);
 
+  // Input validations
   const enteredEmailIsValid = enteredEmail.trim() !== "";
   const enteredPasswordIsValid = enteredPassword.trim() !== "";
 
@@ -20,14 +26,7 @@ const SignupForm: React.FC = () => {
   const passwordInputIsValid =
     !enteredPasswordIsValid && enteredPasswordTouched;
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEnteredEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEnteredPassword(e.target.value);
-  };
-
+  // Input Blur Handler
   const emailInputBlurHandler = () => {
     setEnteredEmailTouch(true);
   };
@@ -37,10 +36,12 @@ const SignupForm: React.FC = () => {
 
   const handleRedirection = () => navigate("/authentification");
 
+  // Submit Handler
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const userSignupData = {
+      id: nanoid(),
       email: enteredEmail.toLocaleLowerCase(),
       password: enteredPassword.toLocaleLowerCase(),
     };
@@ -55,6 +56,7 @@ const SignupForm: React.FC = () => {
       localStorage.setItem("userSignup", JSON.stringify(userSignupData));
     };
 
+    dispatch(validUser(true));
     postUserSignup(userSignupData);
     navigate("/jhon-doe");
   };
@@ -70,7 +72,9 @@ const SignupForm: React.FC = () => {
             label="Email"
             onBlur={emailInputBlurHandler}
             value={enteredEmail}
-            onChange={handleEmailChange}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEnteredEmail(e.target.value)
+            }
             isError={emailInputIsValid}
           />
         </div>
@@ -84,7 +88,9 @@ const SignupForm: React.FC = () => {
             type="password"
             placeholder="************"
             value={enteredPassword}
-            onChange={handlePasswordChange}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEnteredPassword(e.target.value)
+            }
             onBlur={passwordInputBlurHandler}
             isError={passwordInputIsValid}
           />
