@@ -1,16 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { count: 0 };
+export interface CounterState {
+  count: number;
+}
+
+const initialState: CounterState = {
+  count: 0,
+};
 
 const offersCreatedSlice = createSlice({
-  name: "offers-created",
+  name: "counter",
   initialState,
   reducers: {
-    countOffersCreated(state) {
-      state.count = state.count + 1;
+    incrementCountOffers(state) {
+      state.count += 1;
     },
   },
 });
 
-export const { countOffersCreated } = offersCreatedSlice.actions;
+export const { incrementCountOffers } = offersCreatedSlice.actions;
+
 export default offersCreatedSlice.reducer;

@@ -2,14 +2,19 @@ import { useNavigate } from "react-router-dom";
 import Button from "../CustomButtons";
 import Input from "../CustomInputs";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { validUser } from "../../Redux/slices/uiSlice";
+import { nanoid } from "nanoid/non-secure";
 
 export interface userAuthData {
   email: string;
   password: string;
 }
 
-const AuthForm: React.FC = () => {
+const LogInForm: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [enteredEmail, setEnteredEmail] = useState<string>("");
   const [enteredPassword, setEnteredPassword] = useState<string>("");
 
@@ -17,6 +22,7 @@ const AuthForm: React.FC = () => {
   const [enteredPasswordTouched, setEnteredPasswordTouched] =
     useState<boolean>(false);
 
+  // Input validations
   const enteredEmailIsValid = enteredEmail.trim() !== "";
   const enteredPasswordIsValid = enteredPassword.trim() !== "";
 
@@ -24,14 +30,7 @@ const AuthForm: React.FC = () => {
   const passwordInputIsValid =
     !enteredPasswordIsValid && enteredPasswordTouched;
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEnteredEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEnteredPassword(e.target.value);
-  };
-
+  // Input Blur Handler
   const emailInputBlurHandler = () => {
     setEnteredEmailTouch(true);
   };
@@ -39,11 +38,13 @@ const AuthForm: React.FC = () => {
     setEnteredPasswordTouched(true);
   };
 
+  // Submit Handler
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userId = "/jhon-doe";
 
     const userLoginData = {
+      id: nanoid(),
       email: enteredEmail.toLocaleLowerCase(),
       password: enteredPassword.toLocaleLowerCase(),
     };
@@ -54,10 +55,16 @@ const AuthForm: React.FC = () => {
       return;
     }
 
+    if (!localStorage.getItem("formData")) {
+      localStorage.setItem("formData", JSON.stringify([]));
+    }
+
     const postUserLogin = (userLoginData: userAuthData) => {
       localStorage.setItem("userLogin", JSON.stringify(userLoginData));
     };
     postUserLogin(userLoginData);
+    dispatch(validUser(true));
+
     navigate(userId);
   };
 
@@ -71,7 +78,9 @@ const AuthForm: React.FC = () => {
         <div className="flex flex-col justify-center">
           <Input
             value={enteredEmail}
-            onChange={handleEmailChange}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEnteredEmail(e.target.value)
+            }
             onBlur={emailInputBlurHandler}
             label="Email"
             id="email-input"
@@ -89,7 +98,9 @@ const AuthForm: React.FC = () => {
           <div className="flex flex-col justify-center">
             <Input
               value={enteredPassword}
-              onChange={handlePasswordChange}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEnteredPassword(e.target.value)
+              }
               onBlur={passwordInputBlurHandler}
               label="Parola"
               id="password-input"
@@ -128,4 +139,4 @@ const AuthForm: React.FC = () => {
   );
 };
 
-export default AuthForm;
+export default LogInForm;

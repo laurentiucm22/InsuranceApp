@@ -8,7 +8,7 @@ const ButtonStyleTypes = {
     "text-white text-sm w-full text-md text-center p-2.5 font-medium rounded border border-white mt-4 uppercase",
 
   creazaOfertaBtn:
-    "rounded px-6 py-2 font-medium uppercase leading-normal text-white bg-transparent transition-all ease-in duration-200 outline-1 outline outline-white text-sm",
+    "rounded px-2  md:px-6 py-2 font-medium uppercase leading-normal text-white bg-transparent transition-all ease-in duration-200 outline-1 outline outline-white text-sm",
 
   cancelBtn:
     "outline-1 outline outline-white uppercase hover:bg-red-300 transition-all ease-in duration-200 ml-1 inline-block rounded px-6 py-2 text-sm font-medium leading-normal text-white",

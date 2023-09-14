@@ -1,11 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Input from "../CustomInputs";
 import Button from "../CustomButtons";
 import { selectedInsuranceOptions } from "../constant";
 import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementCountOffers } from "../../Redux/slices/offersCreatedSlice";
+import { nanoid } from "nanoid";
+import { RootState } from "../../Redux/store";
 
 export interface userDataTypes {
+  id: string;
   lastName: string;
   firstName: string;
   birthYear: number;
@@ -16,7 +21,7 @@ export interface userDataTypes {
   carYear: string | number;
   licensePlate: string | number;
   prima: string;
-  createdAt: string;
+  createdAt: number;
 }
 
 const CreateOfferForm = () => {
@@ -36,6 +41,8 @@ const CreateOfferForm = () => {
   const [licensePlate, SetLicensePlate] = useState<string>("");
 
   const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
 
   const handleSelecteChanges = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = e.target.value;
@@ -45,29 +52,68 @@ const CreateOfferForm = () => {
   const emptyInputValueHandler = (value: string | number) =>
     value ? value : "TBD";
 
+  const today = moment().format("YYYY-MM-DD");
+
+  const userData: userDataTypes = {
+    id: nanoid(),
+    lastName,
+    firstName,
+    birthYear: moment(birthYear, "YYYY-MM-DD").valueOf(),
+    selectedInsuranceType,
+    carSerial: emptyInputValueHandler(carSerial),
+    numberOfKm: emptyInputValueHandler(numberOfKm),
+    carManufacturer: emptyInputValueHandler(carManufacturer),
+    carYear: emptyInputValueHandler(+carYear),
+    licensePlate: emptyInputValueHandler(licensePlate),
+    prima: (Math.random() * 999.99).toFixed(2),
+    createdAt: moment(today, "YYYY-MM-DD").valueOf(),
+  };
+
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const userData: userDataTypes = {
-      lastName,
-      firstName,
-      birthYear: moment(birthYear, "YYYY-MM-DD").valueOf(),
-      selectedInsuranceType,
-      carSerial: emptyInputValueHandler(carSerial),
-      numberOfKm: emptyInputValueHandler(numberOfKm),
-      carManufacturer: emptyInputValueHandler(carManufacturer),
-      carYear: emptyInputValueHandler(+carYear),
-      licensePlate: emptyInputValueHandler(licensePlate),
-      prima: (Math.random() * 9999.99).toFixed(2),
-      createdAt: `${new Date()}`,
-    };
+    if (
+      firstName === "" &&
+      lastName === "" &&
+      birthYear === "" &&
+      selectedInsuranceType === "" &&
+      carSerial === "" &&
+      numberOfKm === "" &&
+      carManufacturer === "" &&
+      carYear === "" &&
+      licensePlate === ""
+    )
+      return;
+    else {
+      const formData = localStorage.getItem("formData")!;
 
-    // "POST" the data to the "DB"
-    const postFormData = (data: userDataTypes) => {
-      localStorage.setItem("formData", JSON.stringify(data));
-    };
-    postFormData(userData);
+      const currentFormData = JSON.parse(formData);
+
+      currentFormData.push(userData);
+
+      localStorage.setItem("formData", JSON.stringify(currentFormData));
+      dispatch(incrementCountOffers());
+    }
+
+    setFirstName("");
+    setLastName("");
+    setBirthYear("");
+    setSelectedInsuranceType("");
+    setCarSerial("");
+    setNumberOfKm("");
+    setCarManufacturer("");
+    setCarYear("");
+    SetLicensePlate("");
+    navigate(`/${params.userName}`);
   };
+
+  const offerCounter = useSelector((state: RootState) => state.counter.count);
+
+  useEffect(() => {
+    if (!localStorage.getItem("offerCounter")) {
+      localStorage.setItem("offerCounter", JSON.stringify(offerCounter));
+    }
+  }, [offerCounter]);
 
   return (
     <div className="w-full md:w-1/2 p-4 text-white bg-blue-900">
@@ -224,7 +270,7 @@ const CreateOfferForm = () => {
             styleType="cancelBtn"
             className="bg-red-400 outline outline-1 outile-red-400"
             type="button"
-            onClick={() => navigate("..")}
+            onClick={() => navigate(`/${params.userName}`)}
           >
             Cancel
           </Button>

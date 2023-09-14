@@ -9,7 +9,6 @@ interface ModalProps {
 
 const Modal = ({ title, description, temporaryCallBackFn }: ModalProps) => {
   const navigate = useNavigate();
-
   const handleLoginRerouting = () => navigate("authentification");
 
   return (
