@@ -7,5 +7,4 @@ export default defineConfig({
     open: "http://localhost:5173",
   },
   plugins: [react()],
-  base: "/vite-deploy/",
 });
