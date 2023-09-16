@@ -48,7 +48,7 @@ const AccountTable = () => {
                   className="w-full py-4 font-semibold"
                   colSpan={calcNrOfColumnsToSpan}
                 >
-                  Nici o oferta creata
+                  Nici o oferta creata.
                 </td>
               </tr>
             ) : (
